@@ -152,7 +152,6 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-
 /* Hero Section */
 .hero {
   display: grid;
@@ -410,20 +409,51 @@ body {
   gap: 1.5rem;
 }
 
+.service-content{
+  position: relative;
+  z-index: 2;
+  border-radius: 24px;
+
+}
+
+.luz {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(255, 117, 24, 0.55) 0%,
+    rgba(255, 117, 24, 0.28) 35%,
+    rgba(255, 117, 24, 0) 70%
+  );
+  filter: blur(105px);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: opacity 0.25s ease;
+}
+
 /* Design do Card */
 .service-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.06) 0%,
     rgba(255, 255, 255, 0.01) 100%
   ) !important;
-  backdrop-filter: blur(20px);
+   backdrop-filter: blur(80px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   border-left: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+  border-radius: 24px;
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
@@ -433,14 +463,16 @@ body {
 }
 
 .service-card:hover {
-  background-color: rgba(20, 20, 20, 0.8);
-  border-color: rgba(255, 117, 24, 0.4); /* Acende a borda em laranja sutil */
-  transform: translateY(-5px); /* Efeito de elevação */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+   background-color: rgba(20, 20, 20, 0.8);
+    border-radius: rgba(255, 117, 24, 0.4);  
+   transform: translateY(-5px);
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
 }
 
 /* Parte superior do Card (Ícone e Seta) */
 .service-card-top {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -1162,3 +1194,243 @@ body {
   color: var(--text-secondary);
   font-size: 0.9rem;
 }
+/* =========================================
+   PÁGINA DE SERVIÇOS (INTERNA)
+   ========================================= */
+.services-page {
+    padding: 2rem 0 6rem 0; 
+    background-color: var(--bg-color); 
+    background-image: radial-gradient(circle at 80% 20%, rgba(255, 117, 24, 0.05) 0%, transparent 50%);
+}
+
+.services-container {
+    max-width: 1720px; /* Container bem largo para acomodar os 5 cards */
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* --- Hero Section --- */
+.services-hero {
+    margin-bottom: 4rem;
+    max-width: 800px;
+}
+
+.services-hero .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.services-hero .kicker .dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+}
+
+.services-hero h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.services-hero h1 .text-accent {
+    color: var(--accent-color);
+}
+
+.services-hero .subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* --- Classe utilitária do Glassmorphism --- */
+.glass-panel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+}
+
+/* --- Grid de Cards (5 colunas) --- */
+.services-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.detailed-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    overflow: hidden; /* Para a imagem não vazar do border-radius */
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.detailed-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 117, 24, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.card-img {
+    height: 180px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.detailed-card:hover .card-img img {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 117, 24, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-body h3 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.card-body p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.card-arrow {
+    align-self: flex-end;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.detailed-card:hover .card-arrow {
+    opacity: 1;
+}
+
+/* --- Banner Inferior (Trust Banner) --- */
+.trust-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.5rem 3rem;
+    gap: 2rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.trust-main {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1.2;
+    padding-right: 2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.trust-icon-large {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.trust-main-text h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.trust-main-text p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.trust-features {
+    display: flex;
+    gap: 3rem;
+    flex: 2;
+    justify-content: space-around;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.trust-item i {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+}
+
+.trust-item-text h5 {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+.trust-item-text span {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+
+

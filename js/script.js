@@ -72,3 +72,29 @@ document.addEventListener('DOMContentLoaded', () => {
         appearOnScroll.observe(fader);
     });
 });
+
+const serviceCards = document.querySelectorAll(".service-card");
+
+serviceCards.forEach((serviceCard) => {
+    let luz = serviceCard.querySelector(".luz");
+
+    if (!luz) {
+        luz = document.createElement("div");
+        luz.classList.add("luz");
+        serviceCard.appendChild(luz);
+    }
+
+    serviceCard.addEventListener("mousemove", (e) => {
+        const serviceRect = serviceCard.getBoundingClientRect();
+
+        const mouseX = e.clientX - serviceRect.left;
+        const mouseY = e.clientY - serviceRect.top;
+
+        luz.style.opacity = 1;
+        luz.style.transform = `translate(${mouseX - 130}px, ${mouseY - 130}px)`;
+    });
+
+    serviceCard.addEventListener("mouseleave", () => {
+        luz.style.opacity = 0;
+    });
+});
