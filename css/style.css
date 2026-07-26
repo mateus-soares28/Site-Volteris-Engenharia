@@ -132,7 +132,7 @@ body {
 
 .btn-primary {
   background-color: var(--accent-color);
-  color: black;
+  color: rgb(255, 255, 255, .8);
   border: none;
 }
 
