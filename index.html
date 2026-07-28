@@ -17,7 +17,16 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
-<body>
+<body class="is-loading">
+    <div class="preloader" aria-label="Carregando pagina" role="status">
+        <div class="preloader-content">
+            <img src="./img/logo-volteris.svg" alt="Volteris Engenharia" class="preloader-logo">
+            <div class="preloader-bar" aria-hidden="true">
+                <span class="preloader-progress" data-loader-progress></span>
+            </div>
+        </div>
+    </div>
+
     <header class="navbar">
         <div class="container nav-container">
             <div class="logo">
@@ -27,7 +36,7 @@
             </div>
 
             <nav class="nav-links">
-                <a href="#" class="nav-link">Home</a>
+                <a href="#home" class="nav-link">Home</a>
                 <div class="dropdown">
                     <a href="#" class="nav-link dropdown-toggle">
                         Serviços <i class="ph ph-caret-down"></i>
@@ -37,12 +46,12 @@
                         <li><a href="#">Laudos Técnicos</a></li>
                     </ul>
                 </div>
-                <a href="#" class="nav-link">Sobre</a>
-                <a href="#" class="nav-link">Processo</a>
-                <a href="#" class="nav-link">Contato</a>
+                <a href="#sobre" class="nav-link">Sobre</a>
+                <a href="#processo" class="nav-link">Processo</a>
+                <a href="#contato" class="nav-link">Contato</a>
             </nav>
 
-            <a href="#" class="btn btn-primary cta-btn">
+            <a href="https://wa.me/5547988958961?text=Olá! Gostaria de mais informações." target="_blank" class="btn btn-primary cta-btn"> 
                 <i class="ph "></i> Solicitar orçamento
                 <img src="./img/seta-icon.svg" alt="">
             </a>
@@ -50,7 +59,7 @@
     </header>
 
     <main class="container">
-        <section class="hero">
+        <section class="hero" id="home">
             <div class="hero-content fade-in">
                 <div class="badge">
                     <span class="dot"></span> Engenharia elétrica de alta performance
@@ -64,11 +73,11 @@
                 </p>
 
                 <div class="cta-group">
-                    <a href="#" class="btn btn-primary">
+                    <a href="https://wa.me/5547988958961?text=Olá! Gostaria de mais informações." target="_blank" class="btn btn-primary">
                         Iniciar meu projeto <i class="ph"></i>
                         <img src="./img/seta-icon.svg" alt="">
                     </a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="projetos.html" class="btn btn-secondary">
                         <i class="ph ph-play-circle"></i> Ver projetos
                     </a>
                 </div>
@@ -87,7 +96,7 @@
             </div>
 
             <div class="hero-image-wrapper fade-in">
-                <img src="" alt="Engenheiro com capacete sobreposto a indústria" class="hero-image">
+                <img src="./img/hero-card.webp" alt="homem olhando a obra" class="hero-image">
 
                 <div class="image-overlay-card">
                     <div class="overlay-text">
@@ -231,7 +240,7 @@
         </section>
 
         <!-- Seção Sobre a Empresa -->
-        <section class="about-section fade-in">
+        <section class="about-section fade-in" id="sobre">
             <div class="about-grid">
                 <!-- Coluna da Imagem -->
                 <div class="about-image-wrapper">
@@ -282,7 +291,7 @@
         </section>
 
         <!-- Seção Como Trabalhamos -->
-        <section class="process-section fade-in">
+        <section class="process-section fade-in" id="processo">
             <div class="process-header">
                 <span class="kicker">Como trabalhamos</span>
                 <h2>Um processo transparente<br>do início ao fim</h2>
@@ -426,11 +435,8 @@
                     projeto.</p>
 
                 <div class="cta-buttons">
-                    <a href="#" class="btn btn-primary glow-btn">
+                    <a href="https://wa.me/5547988958961?text=Olá! Gostaria de mais informações." class="btn btn-primary glow-btn">
                         Solicitar diagnóstico <i class="ph ph-arrow-right"></i>
-                    </a>
-                    <a href="#" class="btn btn-secondary phone-btn">
-                        <i class="ph ph-phone-call"></i> Falar agora
                     </a>
                 </div>
             </div>
@@ -475,7 +481,7 @@
                                 </div>
                                 <div class="channel-text">
                                     <span>Localização</span>
-                                    <strong>Av. das Indústrias, 1200 — São Paulo, SP</strong>
+                                    <strong>Joinville - Santa Catarina</strong>
                                 </div>
                             </div>
                         </div>

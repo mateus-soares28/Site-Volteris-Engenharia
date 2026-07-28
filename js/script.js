@@ -1,3 +1,33 @@
+(() => {
+    const preloader = document.querySelector('.preloader');
+    const progress = document.querySelector('[data-loader-progress]');
+    const minDisplayTime = 1500;
+    const startedAt = Date.now();
+
+    if (!preloader || !progress) {
+        return;
+    }
+
+    let currentProgress = 0;
+    const progressInterval = window.setInterval(() => {
+        currentProgress = Math.min(currentProgress + Math.random() * 18, 92);
+        progress.style.width = `${currentProgress}%`;
+    }, 260);
+
+    window.addEventListener('load', () => {
+        window.clearInterval(progressInterval);
+        progress.style.width = '100%';
+
+        const elapsedTime = Date.now() - startedAt;
+        const remainingTime = Math.max(minDisplayTime - elapsedTime, 0);
+
+        window.setTimeout(() => {
+            preloader.classList.add('is-hidden');
+            document.body.classList.remove('is-loading');
+        }, remainingTime + 450);
+    });
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     // Lógica do Dropdown de Serviços
     const dropdown = document.querySelector('.dropdown');
