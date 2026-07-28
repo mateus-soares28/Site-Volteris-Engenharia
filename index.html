@@ -349,19 +349,23 @@
         </section>
 
         <!-- Seção de Depoimentos -->
-        <section class="testimonials-section fade-in">
+        <section class="testimonials-section fade-in" id="depoimentos">
             <div class="testimonials-header">
                 <span class="kicker">Depoimentos</span>
                 <h2>Confiança que se<br>constrói em cada projeto</h2>
             </div>
 
-            <div class="testimonials-grid">
+            <div class="testimonials-stack-wrapper">
+                <div class="testimonials-stack" data-testimonials-stack>
                 <!-- Depoimento 1 -->
-                <div class="testimonial-card">
+                <article class="testimonial-card" data-position="front">
+                    <img
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80"
+                        alt="Ricardo Almeida" class="testimonial-avatar" draggable="false">
                     <div class="testimonial-quote">
                         <i class="ph ph-quotes"></i>
                     </div>
-                    <div class="testimonial-stars">
+                    <div class="testimonial-stars" aria-label="5 estrelas">
                         <i class="ph-fill ph-star"></i>
                         <i class="ph-fill ph-star"></i>
                         <i class="ph-fill ph-star"></i>
@@ -377,14 +381,17 @@
                         <strong>Ricardo Almeida</strong>
                         <span>Diretor Industrial, MetalTech</span>
                     </div>
-                </div>
+                </article>
 
                 <!-- Depoimento 2 -->
-                <div class="testimonial-card">
+                <article class="testimonial-card" data-position="middle">
+                    <img
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=256&q=80"
+                        alt="Fernanda Souza" class="testimonial-avatar" draggable="false">
                     <div class="testimonial-quote">
                         <i class="ph ph-quotes"></i>
                     </div>
-                    <div class="testimonial-stars">
+                    <div class="testimonial-stars" aria-label="5 estrelas">
                         <i class="ph-fill ph-star"></i>
                         <i class="ph-fill ph-star"></i>
                         <i class="ph-fill ph-star"></i>
@@ -400,14 +407,17 @@
                         <strong>Fernanda Souza</strong>
                         <span>Gerente de Operações, LogPar</span>
                     </div>
-                </div>
+                </article>
 
                 <!-- Depoimento 3 -->
-                <div class="testimonial-card">
+                <article class="testimonial-card" data-position="back">
+                    <img
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80"
+                        alt="Marcos Vinícius" class="testimonial-avatar" draggable="false">
                     <div class="testimonial-quote">
                         <i class="ph ph-quotes"></i>
                     </div>
-                    <div class="testimonial-stars">
+                    <div class="testimonial-stars" aria-label="5 estrelas">
                         <i class="ph-fill ph-star"></i>
                         <i class="ph-fill ph-star"></i>
                         <i class="ph-fill ph-star"></i>
@@ -423,7 +433,12 @@
                         <strong>Marcos Vinícius</strong>
                         <span>CEO, Nova Fábrica</span>
                     </div>
+                </article>
                 </div>
+
+                <button class="testimonial-shuffle" type="button" data-testimonial-shuffle aria-label="Ver próximo depoimento">
+                    <i class="ph ph-arrow-left"></i>
+                </button>
             </div>
         </section>
 
@@ -461,7 +476,7 @@
                                 </div>
                                 <div class="channel-text">
                                     <span>Telefone</span>
-                                    <strong>+55 (11) 4000-1234</strong>
+                                    <strong>+55 (47) 98895-8961</strong>
                                 </div>
                             </div>
 
@@ -493,29 +508,28 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
-                                    <input type="text" id="nome" placeholder="Seu nome" required>
+                                    <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="empresa">Empresa</label>
-                                    <input type="text" id="empresa" placeholder="Sua empresa">
+                                    <input type="text" id="empresa" name="empresa" placeholder="Sua empresa" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="email">E-mail</label>
-                                    <input type="email" id="email" placeholder="voce@email.com" required>
+                                    <input type="email" id="email" name="email" placeholder="voce@email.com" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="telefone">Telefone</label>
-                                    <input type="tel" id="telefone" placeholder="(11) 90000-0000" required>
+                                    <input type="tel" id="telefone" name="telefone" placeholder="(11) 90000-0000" required>
                                 </div>
                             </div>
 
                             <div class="form-group full-width">
                                 <label for="mensagem">Descreva seu projeto</label>
-                                <textarea id="mensagem" rows="4" placeholder="Conte-nos o que você precisa..."
-                                    required></textarea>
+                                <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte-nos o que você precisa..."></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary glow-btn submit-btn">

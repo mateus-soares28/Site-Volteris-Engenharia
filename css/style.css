@@ -826,14 +826,30 @@ body.is-loading {
 }
 
 /* Grid de 3 Colunas */
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+.testimonials-stack-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 700px;
+  overflow: hidden;
+  padding: 1rem 1rem 4rem;
+}
+
+.testimonials-stack {
+  position: relative;
+  width: 350px;
+  height: 570px;
+  transform: translateX(-85px);
 }
 
 /* Estilo do Card reaproveitando a mesma base do "Como trabalhamos" */
 .testimonial-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 350px;
+  min-height: 450px;
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.06) 0%,
@@ -845,24 +861,66 @@ body.is-loading {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   border-left: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
+  border-radius: 18px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  align-items: center;
+  user-select: none;
+  touch-action: pan-y;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.testimonial-card:hover {
+.testimonial-card[data-position="front"] {
+  z-index: 3;
+  cursor: grab;
+  transform: translateX(0) rotate(-6deg);
+}
+
+.testimonial-card[data-position="front"]:active {
+  cursor: grabbing;
+}
+
+.testimonial-card[data-position="middle"] {
+  z-index: 2;
+  transform: translateX(33%) rotate(0deg);
+}
+
+.testimonial-card[data-position="back"] {
+  z-index: 1;
+  transform: translateX(66%) rotate(6deg);
+}
+
+.testimonial-card.is-dragging {
+  transition: none;
+}
+
+.testimonial-card:hover,
+.testimonial-card[data-position="front"]:focus-within {
   background-color: rgba(20, 20, 20, 0.8);
   border-color: rgba(255, 117, 24, 0.4);
-  transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.testimonial-avatar {
+  width: 7.5rem;
+  height: 7.5rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 117, 24, 0.35);
+  background-color: rgba(255, 255, 255, 0.08);
+  object-fit: cover;
+  pointer-events: none;
+  margin-bottom: 1.25rem;
 }
 
 /* Ícone de aspas vazado seguindo a imagem */
 .testimonial-quote {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
+  font-size: 2.8rem;
+  margin-bottom: 0.75rem;
   line-height: 1;
 }
 
@@ -877,7 +935,7 @@ body.is-loading {
   display: flex;
   gap: 0.2rem;
   color: var(--accent-color);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   font-size: 1.2rem;
 }
 
@@ -886,12 +944,14 @@ body.is-loading {
   font-size: 1rem;
   color: var(--text-primary);
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
   flex-grow: 1; /* Joga a linha e o autor para o rodapé do card, mantendo o tamanho parelho */
 }
 
 /* Linha divisória sutil */
 .testimonial-divider {
+  width: 100%;
   border: none;
   border-top: 1px solid var(--surface-border);
   margin-bottom: 1.5rem;
@@ -901,6 +961,8 @@ body.is-loading {
 .testimonial-author {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .testimonial-author strong {
@@ -913,6 +975,33 @@ body.is-loading {
 .testimonial-author span {
   color: var(--text-secondary);
   font-size: 0.85rem;
+}
+
+.testimonial-shuffle {
+  position: relative;
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  margin-top: 0;
+  border: 1px solid rgba(255, 117, 24, 0.35);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 117, 24, 0.1);
+  color: var(--accent-color);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.testimonial-shuffle:hover {
+  background-color: rgba(255, 117, 24, 0.18);
+  border-color: rgba(255, 117, 24, 0.6);
+  transform: translateY(-2px);
 }
 
 /* =========================================

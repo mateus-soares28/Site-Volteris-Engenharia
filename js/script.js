@@ -103,6 +103,113 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const stack = document.querySelector('[data-testimonials-stack]');
+    const shuffleButton = document.querySelector('[data-testimonial-shuffle]');
+
+    if (stack) {
+        const cards = Array.from(stack.querySelectorAll('.testimonial-card'));
+        const positions = ['front', 'middle', 'back'];
+        let order = positions.slice();
+        let dragStartX = 0;
+        let activeCard = null;
+
+        const applyPositions = () => {
+            cards.forEach((card, index) => {
+                card.dataset.position = order[index];
+                card.style.transform = '';
+            });
+        };
+
+        const shuffleTestimonials = () => {
+            order.unshift(order.pop());
+            applyPositions();
+        };
+
+        cards.forEach((card) => {
+            card.addEventListener('pointerdown', (event) => {
+                if (card.dataset.position !== 'front') {
+                    return;
+                }
+
+                activeCard = card;
+                dragStartX = event.clientX;
+                card.classList.add('is-dragging');
+                card.setPointerCapture(event.pointerId);
+            });
+
+            card.addEventListener('pointermove', (event) => {
+                if (activeCard !== card) {
+                    return;
+                }
+
+                const dragDistance = event.clientX - dragStartX;
+                card.style.transform = `translateX(${dragDistance}px) rotate(-6deg)`;
+            });
+
+            const finishDrag = (event) => {
+                if (activeCard !== card) {
+                    return;
+                }
+
+                const dragDistance = event.clientX - dragStartX;
+                card.classList.remove('is-dragging');
+                activeCard = null;
+                dragStartX = 0;
+
+                if (dragDistance < -150) {
+                    shuffleTestimonials();
+                    return;
+                }
+
+                card.style.transform = '';
+            };
+
+            card.addEventListener('pointerup', finishDrag);
+            card.addEventListener('pointercancel', finishDrag);
+        });
+
+        if (shuffleButton) {
+            shuffleButton.addEventListener('click', shuffleTestimonials);
+        }
+
+        applyPositions();
+    }
+
+    const contactForm = document.querySelector('#contactForm');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            if (!contactForm.checkValidity()) {
+                contactForm.reportValidity();
+                return;
+            }
+
+            const formData = new FormData(contactForm);
+            const nome = formData.get('nome');
+            const empresa = formData.get('empresa');
+            const telefone = formData.get('telefone');
+            const email = formData.get('email');
+            const mensagem = formData.get('mensagem');
+
+            const whatsappMessage = [
+                'Olá! Gostaria de solicitar um atendimento técnico.',
+                '',
+                `Nome: ${nome}`,
+                `Empresa: ${empresa}`,
+                `Telefone: ${telefone}`,
+                `E-mail: ${email}`,
+                mensagem ? `Projeto: ${mensagem}` : ''
+            ].filter(Boolean).join('\n');
+
+            const whatsappUrl = `https://wa.me/5547988958961?text=${encodeURIComponent(whatsappMessage)}`;
+            window.open(whatsappUrl, '_blank', 'noopener');
+        });
+    }
+});
+
 const serviceCards = document.querySelectorAll(".service-card");
 
 serviceCards.forEach((serviceCard) => {
