@@ -9,12 +9,18 @@
     }
 
     let currentProgress = 0;
+    let loaderFinished = false;
     const progressInterval = window.setInterval(() => {
         currentProgress = Math.min(currentProgress + Math.random() * 18, 92);
         progress.style.width = `${currentProgress}%`;
     }, 260);
 
-    window.addEventListener('load', () => {
+    const finishLoader = () => {
+        if (loaderFinished) {
+            return;
+        }
+
+        loaderFinished = true;
         window.clearInterval(progressInterval);
         progress.style.width = '100%';
 
@@ -25,7 +31,10 @@
             preloader.classList.add('is-hidden');
             document.body.classList.remove('is-loading');
         }, remainingTime + 450);
-    });
+    };
+
+    window.addEventListener('load', finishLoader, { once: true });
+    window.setTimeout(finishLoader, 4500);
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -35,72 +44,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownMenu = document.querySelector('.dropdown-menu');
 
     // Toggle ao clicar (melhor para UX mobile e acessibilidade)
-    dropdownToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        dropdownMenu.classList.toggle('active');
-        
-        // Gira a setinha
-        const icon = dropdownToggle.querySelector('i');
-        if (dropdownMenu.classList.contains('active')) {
-            icon.style.transform = 'rotate(180deg)';
-        } else {
-            icon.style.transform = 'rotate(0deg)';
-        }
-        icon.style.transition = 'transform 0.3s ease';
-    });
+    if (dropdown && dropdownToggle && dropdownMenu) {
+        dropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            dropdownMenu.classList.toggle('active');
 
-    // Fecha o dropdown ao clicar fora dele
-    document.addEventListener('click', (e) => {
-        if (!dropdown.contains(e.target)) {
-            dropdownMenu.classList.remove('active');
-            dropdownToggle.querySelector('i').style.transform = 'rotate(0deg)';
-        }
-    });
-
-    // Animação simples de Fade-in on Scroll (Intersection Observer)
-    const fadeElements = document.querySelectorAll('.fade-in');
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Anima apenas uma vez
+            // Gira a setinha
+            const icon = dropdownToggle.querySelector('i');
+            if (icon) {
+                icon.style.transform = dropdownMenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                icon.style.transition = 'transform 0.3s ease';
             }
         });
-    }, observerOptions);
 
-    fadeElements.forEach(el => observer.observe(el));
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Seleciona todos os elementos com a classe fade-in
-    const fadeElements = document.querySelectorAll('.fade-in');
-
-    const appearOptions = {
-        threshold: 0.15, // Aciona quando 15% do elemento estiver visível na tela
-        rootMargin: "0px 0px -50px 0px"
-    };
-
-    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Para de observar depois que já apareceu
+        // Fecha o dropdown ao clicar fora dele
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+                const icon = dropdownToggle.querySelector('i');
+                if (icon) {
+                    icon.style.transform = 'rotate(0deg)';
+                }
             }
         });
-    }, appearOptions);
+    }
 
-    fadeElements.forEach(fader => {
-        appearOnScroll.observe(fader);
-    });
+    initGsapScrollAnimations();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -235,3 +204,136 @@ serviceCards.forEach((serviceCard) => {
         luz.style.opacity = 0;
     });
 });
+
+function initGsapScrollAnimations() {
+    const fadeElements = Array.from(document.querySelectorAll('.fade-in'));
+    const cardElements = Array.from(document.querySelectorAll([
+        '.service-card',
+        '.process-card',
+        '.cta-card',
+        '.contact-card-wrapper',
+        '.stat-item'
+    ].join(', ')));
+    const splitTextElements = Array.from(document.querySelectorAll([
+        '.hero h1',
+        '.services-header h2',
+        '.about-content h2',
+        '.process-header h2',
+        '.testimonials-header h2',
+        '.cta-card h2',
+        '.contact-info h2'
+    ].join(', ')));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!window.gsap || !window.ScrollTrigger || prefersReducedMotion) {
+        fadeElements.forEach((element) => element.classList.add('visible'));
+        return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const smoothWrapper = document.querySelector('#smooth-wrapper');
+    const smoothContent = document.querySelector('#smooth-content');
+
+    if (window.ScrollSmoother && smoothWrapper && smoothContent) {
+        gsap.registerPlugin(ScrollSmoother);
+        ScrollSmoother.create({
+            wrapper: smoothWrapper,
+            content: smoothContent,
+            smooth: 1.15,
+            smoothTouch: 0.12,
+            effects: true,
+            normalizeScroll: true
+        });
+        document.documentElement.classList.add('has-scroll-smoother');
+    }
+
+    gsap.set(fadeElements, {
+        autoAlpha: 0,
+        y: 34
+    });
+
+    gsap.set(cardElements, {
+        autoAlpha: 0
+    });
+
+    fadeElements.forEach((element) => {
+        gsap.to(element, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: element,
+                start: 'top 82%',
+                end: 'bottom 58%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+    });
+
+    cardElements.forEach((card, index) => {
+        gsap.to(card, {
+            autoAlpha: 1,
+            duration: 0.75,
+            ease: 'power2.out',
+            delay: (index % 6) * 0.04,
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 86%',
+                end: 'bottom 62%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+    });
+
+    if (window.SplitText) {
+        gsap.registerPlugin(SplitText);
+
+        const splitTargets = splitTextElements.filter((element) => element.textContent.trim().length);
+        splitTargets.forEach((element) => element.classList.add('split-reveal'));
+
+        const createSplitAnimations = () => {
+            splitTargets.forEach((element) => {
+                SplitText.create(element, {
+                    type: 'lines,words',
+                    linesClass: 'split-line',
+                    wordsClass: 'split-word',
+                    mask: 'lines',
+                    autoSplit: true,
+                    onSplit(self) {
+                        gsap.set(self.words, {
+                            autoAlpha: 0,
+                            yPercent: 105
+                        });
+
+                        return gsap.to(self.words, {
+                            autoAlpha: 1,
+                            yPercent: 0,
+                            duration: 0.72,
+                            ease: 'power3.out',
+                            stagger: {
+                                each: 0.025,
+                                from: 'start'
+                            },
+                            scrollTrigger: {
+                                trigger: element,
+                                start: 'top 84%',
+                                end: 'bottom 62%',
+                                toggleActions: 'play none none reverse'
+                            }
+                        });
+                    }
+                });
+            });
+        };
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(createSplitAnimations);
+        } else {
+            createSplitAnimations();
+        }
+    }
+
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+}
