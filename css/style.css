@@ -10,7 +10,11 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 7rem;
+}
+
+section[id] {
+  scroll-margin-top: 7rem;
 }
 
 html.has-scroll-smoother {
@@ -87,7 +91,7 @@ body.is-loading {
 .container {
   max-width: 1680px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 /* Navbar */
@@ -234,7 +238,7 @@ body.is-loading {
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
-  padding: 4rem 0rem 2rem 0;
+  padding: 3rem 0rem 2rem 0;
 }
 
 .badge {
@@ -1400,10 +1404,10 @@ body.is-loading {
   font-size: 0.9rem;
 }
 /* =========================================
-   PÁGINA DE SERVIÇOS (INTERNA)
+   PÁGINA DE PROJETOS (INTERNA)
    ========================================= */
 .services-page {
-  padding: 2rem 0 6rem 0;
+  padding: 6rem 0 6rem 0;
   background-color: var(--bg-color);
   background-image: radial-gradient(
     circle at 80% 20%,
@@ -1659,13 +1663,22 @@ body.is-loading {
    PÁGINA DE LAUDOS (ADAPTAÇÕES)
    ========================================= */
 
+.hero-laudos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  padding: 5rem 0rem 2rem 0;
+}
+
+
 .text-accent {
     color: var(--accent-color);
 }
 
 /* Ajuste Grid Benefícios */
 .benefits-laudos {
-    padding: 4rem 0;
+    padding: 2rem 0;
 }
 .benefits-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -1875,19 +1888,3 @@ body.is-loading {
     max-width: 80%;
 }
 
-/* Responsividade Básica (Adaptar ao seu responsive.css) */
-@media (max-width: 1024px) {
-    .laudos-grid { grid-template-columns: repeat(2, 1fr); }
-    .process-faq-header { flex-direction: column; align-items: flex-start; }
-    .faq-grid { grid-template-columns: 1fr; }
-    .trust-stats { flex-wrap: wrap; gap: 2rem; }
-    .trust-stat-item { border-right: none; padding-right: 0; width: 45%; }
-    .cta-banner-content { flex-direction: column; text-align: center; }
-    .cta-banner-text p { max-width: 100%; }
-}
-@media (max-width: 768px) {
-    .benefits-grid, .laudos-grid { grid-template-columns: 1fr; }
-    .timeline-steps { flex-wrap: wrap; justify-content: flex-start; }
-    .step-line { display: none; }
-    .trust-stat-item { width: 100%; justify-content: center; }
-}

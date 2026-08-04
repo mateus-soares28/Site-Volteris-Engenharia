@@ -69,8 +69,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    initAnchorNavigation();
     initGsapScrollAnimations();
 });
+
+function initAnchorNavigation() {
+    const header = document.querySelector('.navbar');
+    const links = Array.from(document.querySelectorAll('a[href^="#"]'));
+
+    links.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href');
+            if (!href || href === '#') {
+                return;
+            }
+
+            const target = document.querySelector(href);
+            if (!target) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const headerHeight = header ? header.offsetHeight : 0;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 24;
+
+            window.scrollTo({
+                top: Math.max(targetPosition, 0),
+                behavior: 'smooth'
+            });
+
+            if (window.history && window.history.pushState) {
+                window.history.pushState(null, '', href);
+            }
+        });
+    });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const stack = document.querySelector('[data-testimonials-stack]');
